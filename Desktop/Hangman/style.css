@@ -1,0 +1,21 @@
+h1
+{
+    font-size: xx-large;
+    font-family: 'Permanent Marker', cursive;
+}
+
+#letterStyle
+{
+    background-color: var(--bs-light-text-emphasis);
+    color: white;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin: 10px; /* Add margin for spacing between letters */
+    border: 1px solid black; /* Add a border for better visibility */
+    border-radius: 10%;
+}
+
+#letterStyle:hover
+{
+    background-color:indigo;
+}
