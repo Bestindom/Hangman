@@ -9,9 +9,9 @@ let alphabetList =
 
 let wordList =
 [
-    'waterfall',
-    'spring',
-    'hurricane'
+    'WATERFALL',
+    'SPRING',
+    'HURRICANE'
 ];
 
 let startBtn = document.getElementById("start");
@@ -30,31 +30,8 @@ function getRandomInt(min, max)
 function startGame ()
 {
     startBtn.style.display = 'none';
-    printAlphabet();
-    splitWord();
-};
-
-function printAlphabet ()
-{
-    let row = document.createElement("div");
-    row.classList.add("row");
-
-    for (let i = 0; i < alphabetList.length; i++)
-    {
-        let letter = document.createElement("div");
-        letter.classList.add("col-sm-2");
-        letter.id = 'letter';
-        letter.textContent = alphabetList[i];
-
-        row.appendChild(letter);
-
-        letter.addEventListener("click",
-        function()
-        {
-            checkLetter(letter);
-        });
-    }
-    alphabet.appendChild(row);
+    let wordToPlay = splitWord();
+    printAlphabet(wordToPlay);
 };
 
 function splitWord ()
@@ -71,23 +48,52 @@ function splitWord ()
         lettersSpan.textContent = lettersArray[i];
 
         underscoreSpan.classList.add("underscore");
+        underscoreSpan.id = ("underscore" + i);
         lettersSpan.classList.add("lettersWord");
 
         wordContainer.appendChild(underscoreSpan);
         lettersWord.appendChild(lettersSpan);
     }
+    
+    return lettersArray;
 };
 
-function checkLetter(letter)
+function printAlphabet (wordToPlay)
 {
-    let underscoreSpans = document.querySelectorAll(".underscore");
-    let lettersSpan = document.querySelectorAll(".lettersWord");
+    let row = document.createElement("div");
+    row.classList.add("row");
 
-    for (let i = 0; i < lettersSpan.length; i++)
+    for (let i = 0; i < alphabetList.length; i++)
     {
-        if (letter.textContent === lettersSpan[i].textContent)
+        let letter = document.createElement("div");
+        letter.classList.add("col-sm-2");
+        letter.id = 'letter';
+        letter.textContent = alphabetList[i];
+
+        row.appendChild(letter);
+
+        letter.addEventListener("click",
+        function()
         {
-            underscoreSpans[i].textContent = lettersSpan[i].textContent + " ";
+            checkLetter(letter, wordToPlay);
+        });
+    }
+    alphabet.appendChild(row);
+};
+
+function checkLetter(letter, wordToPlay)
+{
+    console.log(letter.textContent);
+    console.log(wordToPlay);
+
+    for (let i = 0; i < wordToPlay.length; i++)
+    {
+        console.log("esta es la wordToPlay = " + wordToPlay[i]);
+        if (letter.textContent == wordToPlay[i])
+        {
+            console.log("LA LETRA COINCIDE");
+            let letterSwap = document.getElementById("underscore" + i)
+            letterSwap.textContent = wordToPlay[i];
         }
     }
-}
+};
