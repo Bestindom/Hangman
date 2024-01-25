@@ -20,6 +20,7 @@ let draw = document.getElementById("draw");
 let lettersWord = document.getElementById("lettersWord");
 let wordContainer = document.getElementById("wordContainer");
 let alphabet = document.getElementById("alphabet");
+let youLive = 8;
 
 // Generate a random integer between min (inclusive) and max (inclusive)
 function getRandomInt(min, max)
@@ -67,7 +68,7 @@ function printAlphabet (wordToPlay)
     {
         let letter = document.createElement("div");
         letter.classList.add("col-sm-2");
-        letter.id = 'letter';
+        letter.id = 'letter';  //mirar el tema id, PARA QUE CADA UNA TENGA UNO DIFETENTE Y HACER....
         letter.textContent = alphabetList[i];
 
         row.appendChild(letter);
@@ -95,5 +96,13 @@ function checkLetter(letter, wordToPlay)
             let letterSwap = document.getElementById("underscore" + i)
             letterSwap.textContent = wordToPlay[i];
         }
+    }
+};
+
+function winOrLose ()
+{
+    if (youLive < 0)
+    {
+        
     }
 };
