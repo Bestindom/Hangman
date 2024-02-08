@@ -4,18 +4,19 @@ h1
     font-family: 'Permanent Marker', cursive;
 }
 
-#letter
+/* esto funciona con el estilo pero no con el clic */
+.col-sm-2
 {
     background-color: var(--bs-light-text-emphasis);
     color: white;
     padding-top: 5%;
     padding-bottom: 5%;
     margin: 10px; /* Add margin for spacing between letters */
-    border: 1px solid black; /* Add a border for better visibility */
+    border: 1px solid rgb(0, 0, 0); /* Add a border for better visibility */
     border-radius: 10%;
 }
 
-#letter:hover
+.col-sm-2:hover
 {
     background-color:indigo;
 }
