@@ -22,12 +22,15 @@ let wordContainer = document.getElementById("wordContainer");
 let alphabet = document.getElementById("alphabet");
 let img = document.getElementById('image');
 let yourLive = 1;
+let lettersPlayedArray = [];
+let lettersRecovered = recoverLetters();
+console.log(lettersRecovered);
 
 // Generate a random integer between min (inclusive) and max (inclusive)
 function getRandomInt(min, max)
 {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 function startGame ()
 {
@@ -77,13 +80,17 @@ function printAlphabet (wordToPlay)
         letter.addEventListener("click",
         function clickHandler()
         {
+            // Agregamos la letra al array lettersPlayedArray para lugo usarlo con el localStorage
+            lettersPlayedArray.push(letter.textContent);
             checkLetter(letter, wordToPlay);
-
+            console.log('Letras jugadas:', lettersPlayedArray);
             // elimino el event listener de esa letra, NOTA PARA LA PROXIMA, NOMBRAR LA FUNCION :)
-            letter.removeEventListener("click", clickHandler);
+            letter.disabled = true;
+            keepLetters(lettersPlayedArray)
         });
     }
     alphabet.appendChild(row);
+    applyStyles(lettersRecovered);
 };
 
 function checkLetter(letter, wordToPlay)
@@ -128,7 +135,32 @@ function liveControl()
     if(yourLive == 8)
     {
         alert('Dead');
+        lettersPlayedArray = [];
     }
 
     yourLive++;
+};
+
+function keepLetters(lettersPlayedArray) {
+    localStorage.setItem('lettersPlayed', JSON.stringify(lettersPlayedArray));
+};
+
+function recoverLetters() {
+    let lettersPlayed = localStorage.getItem('lettersPlayed');
+    // es una condición de JS, si letterPlayes no es null, que haga lo que está en la derecha "se usa el ?"
+    // JSON.parse() convertirá la cadena de texto en un array de letras jugadas.
+    return lettersPlayed ? JSON.parse(lettersPlayed) : [];
+};
+
+function applyStyles(lettersPlayedArray) {
+    lettersPlayedArray.forEach(letterArray => {
+        for (let i = 0; i < alphabetList.length; i++)
+        {
+            if(alphabetList[i] == letterArray)
+            {
+                let letterElement = document.getElementById("letter" + i); // Suponiendo que cada letra tiene un id igual a su contenido
+                letterElement.click();
+            }
+        }
+    });
 };
