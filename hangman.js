@@ -9,9 +9,18 @@ let alphabetList =
 
 let wordList =
 [
-    'WATERFALL',
-    'SPRING',
-    'HURRICANE'
+    'KIEV',
+    'BERLIN',
+    'LONDRES',
+    'ROMA'
+];
+
+let information =
+[
+    '. Kiev, la capital de Ucrania, es conocida por su arquitectura religiosa, sus monumentos seculares y sus museos de historia.',
+    '. Berlín, capital alemana, data del siglo XIII. Los elementos que recuerdan la turbulenta historia de la ciudad en el siglo XX incluyen el Monumento del Holocausto y los restos del Muro de Berlín con grafitis.',
+    '. Londres, la capital de Inglaterra y del Reino Unido, es una ciudad del siglo XXI con una historia que se remonta a la época romana.',
+    '. Roma, la capital de Italia, es una extensa ciudad cosmopolita que tiene a la vista casi 3,000 años de arte, arquitectura y cultura de influencia mundial.'
 ];
 
 let startBtn = document.getElementById("start");
@@ -21,11 +30,14 @@ let lettersWord = document.getElementById("lettersWord");
 let wordContainer = document.getElementById("wordContainer");
 let alphabet = document.getElementById("alphabet");
 let img = document.getElementById('image');
-let buttonLost = document.getElementById('buttonLost');
+let buttonMessage = document.getElementById('buttonMessage');
+let messageDiv = document.getElementById('message');
 let yourLive = 1;
+let win = false;
 let lettersPlayedArray = [];
 let lettersRecovered = recoverLetters();
 console.log(lettersRecovered);
+let randomWord = getRandomInt(0, wordList.length - 1); // random integer between 0 and last word positon
 
 // Generate a random integer between min (inclusive) and max (inclusive)
 function getRandomInt(min, max)
@@ -42,7 +54,6 @@ function startGame ()
 
 function splitWord ()
 {
-    let randomWord = getRandomInt(0, wordList.length - 1); // random integer between 0 and last word positon
     let lettersArray = wordList[randomWord].split('');
 
     for (let i = 0; i < lettersArray.length; i++)
@@ -120,6 +131,8 @@ function checkLetter(letter, wordToPlay)
     {
         letter.style.background = 'seagreen';
     }
+
+    winControl();
 };
 
 function liveControl()
@@ -134,7 +147,8 @@ function liveControl()
 
     if(yourLive == 8)
     {
-        buttonLost.click()
+        message();
+        buttonMessage.click()
         lettersPlayedArray = [];
     }
 
@@ -168,4 +182,26 @@ function applyStyles(lettersPlayedArray) {
 function playAgain()
 {
     window.location.reload();
+}
+
+function winControl()
+{
+    if (lettersWord.textContent == wordContainer.textContent)
+    {
+        win = true;
+        message();
+        buttonMessage.click()
+    }
+}
+
+function message()
+{
+    if (win == true)
+    {
+        messageDiv.textContent = 'Has ganado, ENHORABUENA ' + information[randomWord];
+    }
+    else
+    {
+        messageDiv.textContent = 'Has perdido, tu palabra es ' + lettersWord.textContent + information[randomWord];
+    }
 }
