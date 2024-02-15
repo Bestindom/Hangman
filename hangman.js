@@ -21,6 +21,7 @@ let lettersWord = document.getElementById("lettersWord");
 let wordContainer = document.getElementById("wordContainer");
 let alphabet = document.getElementById("alphabet");
 let img = document.getElementById('image');
+let buttonLost = document.getElementById('buttonLost');
 let yourLive = 1;
 let lettersPlayedArray = [];
 let lettersRecovered = recoverLetters();
@@ -84,8 +85,7 @@ function printAlphabet (wordToPlay)
             lettersPlayedArray.push(letter.textContent);
             checkLetter(letter, wordToPlay);
             console.log('Letras jugadas:', lettersPlayedArray);
-            // elimino el event listener de esa letra, NOTA PARA LA PROXIMA, NOMBRAR LA FUNCION :)
-            letter.disabled = true;
+            letter.disabled = true; // hago el button disabled
             keepLetters(lettersPlayedArray)
         });
     }
@@ -134,7 +134,7 @@ function liveControl()
 
     if(yourLive == 8)
     {
-        alert('Dead');
+        buttonLost.click()
         lettersPlayedArray = [];
     }
 
@@ -164,3 +164,8 @@ function applyStyles(lettersPlayedArray) {
         }
     });
 };
+
+function playAgain()
+{
+    window.location.reload();
+}
