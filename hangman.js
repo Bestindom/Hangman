@@ -7,20 +7,27 @@ let alphabetList =
     'Y', 'Z'
 ];
 
-let wordList =
-[
-    'KIEV',
-    'BERLIN',
-    'LONDRES',
-    'ROMA'
-];
-
-let information =
-[
-    '. Kiev, la capital de Ucrania, es conocida por su arquitectura religiosa, sus monumentos seculares y sus museos de historia.',
-    '. Berlín, capital alemana, data del siglo XIII. Los elementos que recuerdan la turbulenta historia de la ciudad en el siglo XX incluyen el Monumento del Holocausto y los restos del Muro de Berlín con grafitis.',
-    '. Londres, la capital de Inglaterra y del Reino Unido, es una ciudad del siglo XXI con una historia que se remonta a la época romana.',
-    '. Roma, la capital de Italia, es una extensa ciudad cosmopolita que tiene a la vista casi 3,000 años de arte, arquitectura y cultura de influencia mundial.'
+let wordList = [
+    {
+        word: 'KIEV',
+        description: '. Kiev, la capital de Ucrania, es conocida por su arquitectura religiosa, sus monumentos seculares y sus museos de historia.',
+        image: '../images/KIEV.jpg'
+    },
+    {
+        word: 'BERLIN',
+        description: '. Berlín, capital alemana, data del siglo XIII. Los elementos que recuerdan la turbulenta historia de la ciudad en el siglo XX incluyen el Monumento del Holocausto y los restos del Muro de Berlín con grafitis.',
+        image: '../images/BERLIN.jpg'
+    },
+    {
+        word: 'LONDRES',
+        description: '. Londres, la capital de Inglaterra y del Reino Unido, es una ciudad del siglo XXI con una historia que se remonta a la época romana.',
+        image: '../images/LONDRES.jpg'
+    },
+    {
+        word: 'ROMA',
+        description: '. Roma, la capital de Italia, es una extensa ciudad cosmopolita que tiene a la vista casi 3,000 años de arte, arquitectura y cultura de influencia mundial.',
+        image: '../images/ROMA.jpg'
+    }
 ];
 
 let startBtn = document.getElementById("start");
@@ -30,6 +37,7 @@ let lettersWord = document.getElementById("lettersWord");
 let wordContainer = document.getElementById("wordContainer");
 let alphabet = document.getElementById("alphabet");
 let img = document.getElementById('image');
+let img2 = document.getElementById('image2');
 let buttonMessage = document.getElementById('buttonMessage');
 let messageDiv = document.getElementById('message');
 let yourLive = 1;
@@ -37,7 +45,10 @@ let win = false;
 let lettersPlayedArray = [];
 let lettersRecovered = recoverLetters();
 console.log(lettersRecovered);
-let randomWord = getRandomInt(0, wordList.length - 1); // random integer between 0 and last word positon
+// let randomWord = getRandomInt(0, wordList.length - 1); // random integer between 0 and last word positon
+let wordKeys = Object.keys(wordList);
+let randomWordKey = wordKeys[Math.floor(Math.random() * wordKeys.length)];
+let randomWord = wordList[randomWordKey];
 
 // Generate a random integer between min (inclusive) and max (inclusive)
 function getRandomInt(min, max)
@@ -54,7 +65,7 @@ function startGame ()
 
 function splitWord ()
 {
-    let lettersArray = wordList[randomWord].split('');
+    let lettersArray = randomWord.word.split('');
 
     for (let i = 0; i < lettersArray.length; i++)
     {
@@ -137,14 +148,9 @@ function checkLetter(letter, wordToPlay)
 
 function liveControl()
 {
-    for (let i = 0; i < 9; i++)
-    {
-        if(i == yourLive)
-        {
-            img.src = '../images/step' + i + '.png';
-        }
-    }
+    img.src = '../images/step' + yourLive + '.png';
 
+    console.log(yourLive);
     if(yourLive == 8)
     {
         message();
@@ -191,17 +197,13 @@ function winControl()
         win = true;
         message();
         buttonMessage.click()
+        lettersPlayedArray = [];
     }
 }
 
 function message()
 {
-    if (win == true)
-    {
-        messageDiv.textContent = 'Has ganado, ENHORABUENA ' + information[randomWord];
-    }
-    else
-    {
-        messageDiv.textContent = 'Has perdido, tu palabra es ' + lettersWord.textContent + information[randomWord];
-    }
+    messageDiv.textContent = win ? 'Has ganado, ENHORABUENA ' + randomWord.description : 'Has perdido, tu palabra es ' + randomWord.word + randomWord.description;
+
+    img2.src = randomWord.image;
 }
